@@ -1,0 +1,172 @@
+/* Toàn bộ màn hình */
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #6a11cb, #2575fc); /* Gradient nền */
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+}
+
+/* Khung chứa form */
+.register-container {
+    background: rgba(255, 255, 255, 0.2); /* Nền mờ */
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    width: 350px;
+}
+
+/* Tiêu đề */
+h2 {
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+/* Nhóm input */
+.input-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+/* Ô nhập input */
+.input-group input {
+    width: 100%;
+    max-width: 280px; /* Giữ kích thước cố định */
+    height: 45px;
+    padding: 10px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 5px;
+    background: rgba(255, 255, 255, 0.3);
+    color: white;
+    font-size: 16px;
+    text-align: center;
+    outline: none;
+    box-sizing: border-box;
+}
+
+/* Placeholder màu sáng hơn */
+.input-group input::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+/* Nút đăng ký */
+.btn-register {
+    width: 100%;
+    max-width: 280px;
+    background: white;
+    color: #6a11cb;
+    border: none;
+    padding: 12px;
+    border-radius: 30px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    margin-top: 10px;
+    transition: 0.3s;
+}
+
+.btn-register:hover {
+    background: #ddd;
+}
+
+/* Link đăng ký */
+p {
+    margin-top: 10px;
+    color: white;
+}
+
+p a {
+    color: yellow;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+p a:hover {
+    text-decoration: underline;
+}
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(to bottom, #5a2fb8, #3b82f6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.search-container {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+h2 {
+    color: white;
+    margin-bottom: 20px;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: none;
+    border-radius: 5px;
+    background: rgba(255, 255, 255, 0.3);
+    color: white;
+    text-align: center;
+}
+
+.input-group input::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.btn-search {
+    width: 100%;
+    padding: 10px;
+    background-color: white;
+    color: #5a2fb8;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.btn-search:hover {
+    background-color: #ddd;
+}
+
+p {
+    margin-top: 15px;
+    color: white;
+}
+
+p a {
+    color: yellow;
+    text-decoration: none;
+}
+
+p a:hover {
+    text-decoration: underline;
+}
+.result-container {
+    margin-top: 20px;
+    padding: 15px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    text-align: center;
+    color: white;
+}
+
+.error {
+    color: red;
+    font-weight: bold;
+}
