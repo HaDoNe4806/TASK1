@@ -34,21 +34,29 @@ if (!isset($_SESSION['user'])) {
         if (isset($_GET['id'])) {
             $id = $_GET['id'];
         
-            // Lỗ hổng SQL Injection
-            $query = "SELECT * FROM users WHERE id = $id";
-            $result = $conn->query($query);
+     // Kiểm tra nếu ID không phải số → chặn lỗi SQL Injection
+     if (!is_numeric($id)) {
+        echo "<p class='error'>ID không hợp lệ!</p>";
+    } else {
+        // Dùng Prepared Statements để bảo vệ chống SQL Injection
+        $stmt = $conn->prepare("SELECT id, username FROM users WHERE id = ?");
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        $result = $stmt->get_result();
 
-            echo "<div class='result-container'>";
-            if ($result->num_rows > 0) {
-                echo "<h3>Kết quả:</h3>";
-                while ($row = $result->fetch_assoc()) {
-                    echo "<p>ID: <b>" . $row["id"] . "</b> - Username: <b>" . $row["username"] . "</b></p>";
-                }
-            } else {
-                echo "<p class='error'>Không tìm thấy người dùng!</p>";
+        echo "<div class='result-container'>";
+        if ($result->num_rows > 0) {
+            echo "<h3>Kết quả:</h3>";
+            while ($row = $result->fetch_assoc()) {
+                echo "<p>ID: <b>" . htmlspecialchars($row["id"]) . "</b> - Username: <b>" . htmlspecialchars($row["username"]) . "</b></p>";
             }
-            echo "</div>";
+        } else {
+            echo "<p class='error'>Không tìm thấy người dùng!</p>";
+        }
+        echo "</div>";
 
+        $stmt->close();
+    }
           
         }
 

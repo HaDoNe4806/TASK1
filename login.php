@@ -20,6 +20,7 @@
         <p>Chưa có tài khoản? <a href="register.php">Đăng kí ngay</a></p>
     </div>
     <?php
+    session_start();
 $host = "localhost";
 $user = "hado";
 $pass = "hado167";
@@ -33,23 +34,27 @@ if ($conn->connect_error) {
 
 // Kiểm tra nếu form được submit
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Kiểm tra xem username và password có tồn tại không
-    if (isset($_POST["username"]) && isset($_POST["password"])) {
+    if (!empty($_POST["username"]) && !empty($_POST["password"])) {
         $username = $_POST["username"];
         $password = $_POST["password"];
 
-        // Truy vấn database
-        $query = "SELECT * FROM users WHERE username='$username' AND password='$password'";
-        $result = $conn->query($query);
+        // Sử dụng Prepared Statement để tránh SQL Injection
+        $stmt = $conn->prepare("SELECT password FROM users WHERE username = ?");
+        $stmt->bind_param("s", $username);
+        $stmt->execute();
+        $stmt->store_result();
+        $stmt->bind_result($hashed_password);
+        $stmt->fetch();
 
-        if ($result->num_rows > 0) {
-            session_start();
-            $_SESSION['user'] = $username;
+        // Kiểm tra mật khẩu
+        if ($stmt->num_rows > 0 && password_verify($password, $hashed_password)) {
+            $_SESSION['user'] = $username; // Lưu session
             header("Location: index.php"); // Chuyển hướng đến trang index
             exit();
         } else {
             echo "<p class='error'>Sai username hoặc password!</p>";
         }
+        $stmt->close();
     } else {
         echo "<p class='error'>Vui lòng nhập đầy đủ thông tin!</p>";
     }
