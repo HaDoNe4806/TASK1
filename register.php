@@ -51,23 +51,33 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit();
     }
 
-    //SQL Injection 
-    $query = "SELECT id FROM users WHERE username = '$username'";
-    $result = $conn->query($query);
+    // Kiểm tra username đã tồn tại hay chưa
+    $stmt2 = $conn->prepare("SELECT id FROM users WHERE username = ?");
+    $stmt2->bind_param("s", $username);
+    $stmt2->execute();
+    $stmt2->store_result();
 
-    if ($result->num_rows > 0) {
+    if ($stmt2->num_rows > 0) {
         echo "<script>alert('Tên đăng nhập đã tồn tại!'); window.location='register.php';</script>";
+        $stmt2->close();
         exit();
     }
+    $stmt2->close();
 
-   
-    $query = "INSERT INTO users(username, password) VALUES ('$username', '$password')";
-    
-    if ($conn->query($query) === TRUE) {
+    // Băm mật khẩu trước khi lưu vào database
+    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+
+    // Sử dụng Prepared Statement để INSERT
+    $stmt = $conn->prepare("INSERT INTO users(username, password) VALUES (?, ?)");
+    $stmt->bind_param("ss", $username, $hashed_password);
+
+    if ($stmt->execute()) {
         echo "<script>alert('Đăng ký thành công!'); window.location='login.php';</script>";
     } else {
         echo "<script>alert('Đăng ký thất bại!');</script>";
     }
+
+    $stmt->close(); // Đóng statement
 }
 
 $conn->close(); // Đóng kết nối database
